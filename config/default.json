@@ -1,0 +1,5 @@
+{
+    "mongoLocal": "mongodb://localhost/local",
+    "mongoRemote": "mongodb+srv://tanda123:tanda123@cluster0-y1njz.mongodb.net/vitaridev?retryWrites=true&w=majority",
+    "jwtSecret": "novadados"
+}
