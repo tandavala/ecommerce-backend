@@ -1,12 +1,12 @@
-const express = require('express')
+const express = require("express");
 const router = express.Router();
-const mongoose = require('mongoose')
-const jwt = require('jsonwebtoken')
-const authenticate = require('../middleware/authenticate')
 
+// @route     POST api/users
+// @desc      Creating user
+// @access    Public
+router.post("/signup", (req, res) => {
+  console.log(req.body);
+  return res.send("User router");
+});
 
-router.get('/', (req, res, next) => {
-    res.send("User Router management")
-})
-
-module.exports = router
+module.exports = router;
