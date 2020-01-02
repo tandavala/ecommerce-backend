@@ -5,7 +5,6 @@ const gravater = require("gravatar");
 const bcrypt = require("bcrypt");
 const config = require("config");
 const jwt = require("jsonwebtoken");
-const authenticate = require("../middleware/authenticate");
 
 const User = require("../models/User");
 const UserAddress = require("../models/UserAddress");
