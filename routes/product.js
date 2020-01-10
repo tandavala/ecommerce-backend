@@ -23,6 +23,9 @@ router.post(
     check("description", "Descricao e obrigatorio")
       .not()
       .isEmpty(),
+    check("producctPic", "A imagem do produto e obrigatorio")
+      .not()
+      .isEmpty(),
     check("category", "Categoria e obrigatorio")
       .not()
       .isEmpty(),
@@ -43,6 +46,7 @@ router.post(
       price,
       stock,
       description,
+      producctPic,
       category,
       createdBy
     } = req.body;
@@ -54,6 +58,7 @@ router.post(
         price: price,
         stock: stock,
         description: description,
+        producctPic: producctPic,
         category: category,
         createdBy: createdBy
       });
@@ -69,4 +74,19 @@ router.post(
   }
 );
 
+router.get("/", (req, res, next) => {
+  Product.find({})
+    .select("_id name price productPic slug")
+    .exec()
+    .then(products => {
+      res.status(200).json({
+        products: products
+      });
+    })
+    .catch(er => {
+      res.status(500).json({
+        error: er.message
+      });
+    });
+});
 module.exports = router;
