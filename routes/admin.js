@@ -75,4 +75,52 @@ router.post(
   }
 );
 
+router.post(
+  "/login",
+  [
+    check("email", "Por favor digite um Email valido").isEmail(),
+    check("password", "Por favor digite a tua senha").exists()
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array()
+      });
+    }
+    const { email, password } = req.body;
+
+    try {
+      let user = await Admin.findOne({ email });
+      if (!user) {
+        return res.status(400).json({
+          errors: [{ msg: "Credencial invalido" }]
+        });
+      }
+      const isMath = await bcrypt.compare(password, user.password);
+
+      if (!isMath) {
+        return res.status(400).json({
+          errors: [{ msg: "Credencial invalido" }]
+        });
+      }
+      const payload = {
+        user: {
+          id: user.id
+        }
+      };
+      jwt.sign(
+        payload,
+        config.get("jwtSecret"),
+        { expiresIn: 360000 },
+        (err, token) => {
+          if (err) throw err;
+          return res.json({ token });
+        }
+      );
+    } catch (err) {
+      return res.status(500).send("Error no servidor");
+    }
+  }
+);
 module.exports = router;
