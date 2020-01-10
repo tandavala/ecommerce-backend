@@ -8,7 +8,7 @@ const User = require("../models/User");
 
 const router = express.Router();
 
-routeer.get("/", auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     const user = await (await User.findById(req.user.id)).isSelected(
       "-password"
